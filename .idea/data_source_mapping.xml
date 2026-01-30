@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourcePerFileMappings">
+    <file url="file://$PROJECT_DIR$/HRmgmt/database_setup.sql" value="9e6b1a58-4fe5-4015-a132-c1e1bde29ebb" />
     <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/9e6b1a58-4fe5-4015-a132-c1e1bde29ebb/console.sql" value="9e6b1a58-4fe5-4015-a132-c1e1bde29ebb" />
   </component>
 </project>
