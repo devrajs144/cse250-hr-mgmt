@@ -2,15 +2,13 @@
 
 ## Project Description
 
-The HR Management System is a database-driven project developed using
-MariaDB within IntelliJ IDEA.
-It is designed to manage and organize employee-related information such
-as personal details, department allocation, job roles, salary records,
-attendance data, leave records, and performance information.
+The HR Management System is a database-driven project developed using MariaDB within IntelliJ IDEA. It is designed to manage and organize employee-related information such as personal details, department allocation, job roles, salary records, attendance data, leave records, and performance information.
 
-This project demonstrates practical implementation of relational
-database concepts including schema design, normalization, constraints,
-and SQL querying.
+This project demonstrates practical implementation of relational database concepts including schema design, normalization, constraints, and SQL querying.
+
+The topic was chosen because Human Resource management is a core function in every organization, regardless of size or industry. Companies deal with large volumes of employee data daily, and managing this information manually or through unstructured systems often leads to inefficiencies, errors, and data redundancy. A structured database system helps centralize this information, making it easier to access, update, and analyze.
+
+In real-world scenarios, HR databases are critical for maintaining organizational structure, monitoring employee performance, managing payroll, tracking attendance, and supporting decision-making processes. They enable HR departments to operate efficiently, ensure data consistency, and generate meaningful insights such as workforce distribution, salary trends, and performance evaluations.
 
 ------------------------------------------------------------------------
 
