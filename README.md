@@ -66,16 +66,6 @@ reporting.
 Maintains daily attendance records of employees.\
 It helps monitor presence, productivity, and attendance patterns.
 
-### Leave_Records
-
-Tracks employee leave applications and approvals.\
-This ensures proper leave management and availability tracking.
-
-### Performance_Records
-
-Stores performance evaluations and appraisal data.\
-This supports employee development, promotions, and HR decision-making.
-
 These tables are connected through foreign keys to ensure: 
 - Data consistency
 - Reduced redundancy
