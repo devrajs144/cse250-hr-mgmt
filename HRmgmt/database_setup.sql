@@ -32,7 +32,7 @@ INSERT IGNORE INTO employees (full_name, role, dept_id, salary) VALUES
                                                                     ('Ananya Iyer', 'Data Scientist', 1, 98000.00),
                                                                     ('Kabir Verma', 'Accountant', 3, 68000.00),
                                                                     ('Ishani Kapoor', 'DevOps Engineer', 1, 92000.00),
-                                                                    ('Arjun Reddy', 'Employee Relations', 2, 58000.00),
+                                                                    ('Rahul Reddy', 'Employee Relations', 2, 58000.00),
                                                                     ('Meera Joshi', 'Portfolio Manager', 3, 110000.00);
 
 SELECT * FROM employees;
