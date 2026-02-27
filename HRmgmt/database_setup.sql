@@ -66,8 +66,9 @@ INSERT INTO projects (project_name, budget) VALUES
 # INSERT INTO employee_projects (emp_id, project_id) VALUES (1, 1), (2, 2), (3, 3), (4, 1), (6, 1);
 
 INSERT INTO payroll (emp_id, payment_date, amount) VALUES
-                                                       (1, '2026-01-31', 85000.00), (2, '2026-01-31', 75000.00), (3, '2026-01-31', 82000.00);
-
+                                                       (4, '2026-01-31', 105000.00), (5, '2026-01-31', 62000.00), (6, '2026-01-31', 98000.00),
+                                                       (7, '2026-01-31', 68000.00), (8, '2026-01-31', 92000.00), (9, '2026-01-31', 58000.00),
+                                                       (10, '2026-01-31', 110000.00);
 -- 4. Verify
 SELECT e.full_name, d.dept_name, e.role, p.amount as last_pay
 FROM employees e
