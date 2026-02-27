@@ -1,160 +1,171 @@
-# HR Management System  
+# HR Management System (CSE250)
 
-## Project Description  
+## Project Overview
 
-The **HR Management System** is a relational database project developed using MariaDB in IntelliJ IDEA. The system is designed to efficiently manage and organize structured employee data using interconnected database tables.
+The HR Management System is a relational database project developed using MariaDB.  
+The database used in this project is:
 
-This project focuses on implementing core DBMS concepts such as relational schema design, normalization, primary and foreign key constraints, and structured SQL queries. The database ensures organized storage, integrity, and efficient retrieval of employee-related information.
+cse250_hr
 
-The system is built around five core tables: **Employees, Departments, Job_Roles, Salaries, and Attendance**, which together represent the fundamental structure of an HR database.
+This system manages structured HR data including departments, employees, projects, and payroll transactions.
 
----
+The project demonstrates practical implementation of:
 
-## Objectives  
-
-- To design a normalized relational database schema  
-- To establish relationships between HR-related entities  
-- To maintain structured employee data using constraints  
-- To ensure data consistency through primary and foreign keys  
-- To perform meaningful SQL queries across related tables  
-
----
-
-## Technologies Used  
-
-- **Database:** MariaDB  
-- **IDE:** IntelliJ IDEA  
-- **Language:** SQL  
-- **Version Control:** Git & GitHub  
+- Database creation and deletion
+- Table creation with primary and foreign keys
+- One-to-many relationships
+- Data insertion
+- SQL JOIN queries for verification
 
 ---
 
-## Database Design (Tables & Purpose)  
+## Database Setup
 
-The HR Management System consists of multiple interconnected tables that maintain relational integrity and avoid redundancy through proper key constraints.
+```sql
+CREATE DATABASE IF NOT EXISTS cse250_hr;
+USE cse250_hr;
+```
+
+The database is dropped and recreated to ensure a clean environment before execution.
 
 ---
 
-### 1. Employees  
+## Tables and Structure
 
-This is the central table of the system.  
+The system consists of four main tables:
+
+1. departments  
+2. employees  
+3. projects  
+4. payroll  
+
+---
+
+### 1. departments
+
+Stores department information.
 
 **Attributes:**
-- Employee_ID (Primary Key)  
-- First_Name  
-- Last_Name  
-- Email  
-- Phone_Number  
-- Hire_Date  
-- Department_ID (Foreign Key)  
-- Role_ID (Foreign Key)  
 
-The Employees table connects with Departments, Job_Roles, Salaries, and Attendance, forming the backbone of the database structure.
+- dept_id (INT, Primary Key, AUTO_INCREMENT)
+- dept_name (VARCHAR(50), NOT NULL)
+
+This table categorizes employees into different departments.
 
 ---
 
-### 2. Departments  
+### 2. employees
 
-This table stores information about different departments within the organization.
+Stores employee details.
 
 **Attributes:**
-- Department_ID (Primary Key)  
-- Department_Name  
-- Location  
 
-This table helps categorize employees and supports structured organizational mapping.
+- id (INT, Primary Key, AUTO_INCREMENT)
+- full_name (VARCHAR(100), NOT NULL)
+- role (VARCHAR(50))
+- dept_id (INT, Foreign Key → departments.dept_id)
+- salary (DECIMAL(10,2))
+
+Each employee belongs to one department through the foreign key relationship.
 
 ---
 
-### 3. Job_Roles  
+### 3. projects
 
-This table maintains standardized job positions within the organization.
+Stores project details handled by the organization.
 
 **Attributes:**
-- Role_ID (Primary Key)  
-- Role_Title  
-- Role_Description  
 
-This structure ensures consistent role classification and prevents redundancy in employee records.
+- project_id (INT, Primary Key, AUTO_INCREMENT)
+- project_name (VARCHAR(100), NOT NULL)
+- budget (DECIMAL(15,2))
+
+This table tracks project names and allocated budgets.
 
 ---
 
-### 4. Salaries  
+### 4. payroll
 
-The Salaries table maintains compensation details for employees.
+Stores payroll transaction records.
 
 **Attributes:**
-- Salary_ID (Primary Key)  
-- Employee_ID (Foreign Key)  
-- Basic_Salary  
-- Allowances  
-- Deductions  
-- Payment_Date  
 
-This table supports payroll record maintenance and financial tracking.
+- transaction_id (INT, Primary Key, AUTO_INCREMENT)
+- emp_id (INT, Foreign Key → employees.id)
+- payment_date (DATE)
+- amount (DECIMAL(10,2))
 
----
-
-### 5. Attendance  
-
-The Attendance table records employee presence information.
-
-**Attributes:**
-- Attendance_ID (Primary Key)  
-- Employee_ID (Foreign Key)  
-- Attendance_Date  
-- Status (Present / Absent / Leave)  
-
-This table helps monitor daily attendance and analyze work patterns.
+Each payroll entry corresponds to a specific employee and payment date.
 
 ---
 
-## Relationship Structure  
+## Relationships
 
-- Each employee belongs to one department.  
-- Each employee is assigned one job role.  
-- Each employee can have multiple salary records.  
-- Each employee can have multiple attendance records.  
+- One department → Many employees
+- One employee → Many payroll transactions
 
-Primary and Foreign Key constraints ensure:
+Foreign key constraints ensure:
 
-- Data consistency  
-- Referential integrity  
-- Elimination of redundancy  
-- Efficient relational querying  
+- Referential integrity
+- Data consistency
+- Prevention of orphan records
 
 ---
 
-## Features  
+## Data Population
 
-- Structured employee data management  
-- Department and role classification  
-- Salary record maintenance  
-- Attendance tracking system  
-- Relational database integrity using constraints  
+Sample data is inserted into:
 
----
+- departments
+- employees
+- projects
+- payroll
 
-## Future Scope  
-
-- Integration with payroll automation  
-- Web-based interface for HR access  
-- Employee self-service module  
-- Extended reporting and analytics features  
+This enables testing of relational queries and JOIN operations.
 
 ---
 
-## Learning Outcomes  
+## Verification Query
 
-- Practical implementation of relational database design  
-- Use of primary and foreign key constraints  
-- Schema normalization techniques  
-- Writing SQL queries using joins  
-- Managing databases using MariaDB  
+```sql
+SELECT e.full_name, d.dept_name, e.role, p.amount as last_pay
+FROM employees e
+JOIN departments d ON e.dept_id = d.dept_id
+JOIN payroll p ON e.id = p.emp_id;
+```
+
+Additional verification:
+
+```sql
+SELECT * FROM departments;
+SELECT * FROM employees;
+SELECT * FROM projects;
+SELECT * FROM payroll;
+```
 
 ---
 
-## Authors  
+## Key Concepts Implemented
 
-- **Devraj Sangharajka (AU2420181)**  
-- **Dvij Desai (AU2420139)**  
+- Primary Keys
+- Foreign Keys
+- One-to-Many Relationship
+- SQL JOIN operations
+- Auto Increment fields
+- Decimal and Date datatypes
+
+---
+
+## Technologies Used
+
+- Database: MariaDB
+- Language: SQL
+- IDE: IntelliJ IDEA
+- Version Control: Git & GitHub
+
+---
+
+## Authors
+
+- Devraj Sangharajka (AU2420181)
+- Dvij Desai (AU2420139)
