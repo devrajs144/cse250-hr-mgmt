@@ -1,111 +1,160 @@
-# HR Management System 
+# HR Management System  
 
-## Project Description
+## Project Description  
 
-The HR Management System is a database-driven project developed using MariaDB within IntelliJ IDEA. It is designed to manage and organize employee-related information such as personal details, department allocation, job roles, salary records, attendance data, leave records, and performance information.
+The **HR Management System** is a relational database project developed using MariaDB in IntelliJ IDEA. The system is designed to efficiently manage and organize structured employee data using interconnected database tables.
 
-This project demonstrates practical implementation of relational database concepts including schema design, normalization, constraints, and SQL querying.
+This project focuses on implementing core DBMS concepts such as relational schema design, normalization, primary and foreign key constraints, and structured SQL queries. The database ensures organized storage, integrity, and efficient retrieval of employee-related information.
 
-The topic was chosen because Human Resource management is a core function in every organization, regardless of size or industry. Companies deal with large volumes of employee data daily, and managing this information manually or through unstructured systems often leads to inefficiencies, errors, and data redundancy. A structured database system helps centralize this information, making it easier to access, update, and analyze.
+The system is built around five core tables: **Employees, Departments, Job_Roles, Salaries, and Attendance**, which together represent the fundamental structure of an HR database.
 
-In real-world scenarios, HR databases are critical for maintaining organizational structure, monitoring employee performance, managing payroll, tracking attendance, and supporting decision-making processes. They enable HR departments to operate efficiently, ensure data consistency, and generate meaningful insights such as workforce distribution, salary trends, and performance evaluations.
+---
 
-------------------------------------------------------------------------
+## Objectives  
 
-## Objectives
+- To design a normalized relational database schema  
+- To establish relationships between HR-related entities  
+- To maintain structured employee data using constraints  
+- To ensure data consistency through primary and foreign keys  
+- To perform meaningful SQL queries across related tables  
 
--   To design a structured HR database system
--   To store and manage employee records efficiently
--   To track departments, job roles, and salaries
--   To maintain attendance and employment history
--   To perform analytical HR queries for decision-making
+---
 
-------------------------------------------------------------------------
+## Technologies Used  
 
-## Technologies Used
+- **Database:** MariaDB  
+- **IDE:** IntelliJ IDEA  
+- **Language:** SQL  
+- **Version Control:** Git & GitHub  
 
--   **Database:** MariaDB
--   **IDE:** IntelliJ IDEA
--   **Language:** SQL
--   **Version Control:** Git & GitHub
+---
 
-------------------------------------------------------------------------
+## Database Design (Tables & Purpose)  
 
-## Database Design (Tables & Purpose)
+The HR Management System consists of multiple interconnected tables that maintain relational integrity and avoid redundancy through proper key constraints.
 
-The HR Management System is structured using multiple interconnected
-tables linked through primary and foreign keys to maintain relational
-integrity and avoid redundancy.
+---
 
-### Employees
+### 1. Employees  
 
-Stores core employee information such as name, contact details,
-department, and hiring date.\
-This table acts as the central entity connecting most HR operations.
+This is the central table of the system.  
 
-### Departments
+**Attributes:**
+- Employee_ID (Primary Key)  
+- First_Name  
+- Last_Name  
+- Email  
+- Phone_Number  
+- Hire_Date  
+- Department_ID (Foreign Key)  
+- Role_ID (Foreign Key)  
 
-Contains details about different departments within the organization.\
-It helps categorize employees and supports organizational structure and
-reporting.
+The Employees table connects with Departments, Job_Roles, Salaries, and Attendance, forming the backbone of the database structure.
 
-### Job_Roles
+---
 
-Maintains standardized job positions and designations.\
-This allows role-based classification of employees and workforce
-analysis.
+### 2. Departments  
 
-### Salaries
+This table stores information about different departments within the organization.
 
-Stores employee salary details and payment records.\
-This supports payroll tracking, compensation analysis, and HR financial
-reporting.
+**Attributes:**
+- Department_ID (Primary Key)  
+- Department_Name  
+- Location  
 
-### Attendance
+This table helps categorize employees and supports structured organizational mapping.
 
-Maintains daily attendance records of employees.\
-It helps monitor presence, productivity, and attendance patterns.
+---
 
-These tables are connected through foreign keys to ensure: 
-- Data consistency
-- Reduced redundancy
-- Accurate relationship mapping
-- Efficient query performance
+### 3. Job_Roles  
 
-------------------------------------------------------------------------
+This table maintains standardized job positions within the organization.
 
-## Features
+**Attributes:**
+- Role_ID (Primary Key)  
+- Role_Title  
+- Role_Description  
 
--   Centralized employee database
--   Department and role mapping
--   Salary tracking system
--   Attendance and leave management
--   Performance monitoring
--   HR analytical queries
+This structure ensures consistent role classification and prevents redundancy in employee records.
 
-------------------------------------------------------------------------
+---
 
-## Future Scope Of Improvements
+### 4. Salaries  
 
--   Payroll automation
--   Web-based HR dashboard
--   Employee self-service portal
--   Recruitment module
--   Advanced HR analytics
+The Salaries table maintains compensation details for employees.
 
-------------------------------------------------------------------------
+**Attributes:**
+- Salary_ID (Primary Key)  
+- Employee_ID (Foreign Key)  
+- Basic_Salary  
+- Allowances  
+- Deductions  
+- Payment_Date  
 
-## Learning Outcomes
+This table supports payroll record maintenance and financial tracking.
 
--   Understanding relational database design
--   Implementing SQL queries and joins
--   Applying normalization techniques
--   Using constraints and foreign keys
--   Working with MariaDB in IntelliJ IDEA
+---
 
-------------------------------------------------------------------------
+### 5. Attendance  
 
-## Author
+The Attendance table records employee presence information.
 
-**Name:** Devraj Sangharajka (AU2420181)\
-**Name:** Dvij DesaI (AU2420139)
+**Attributes:**
+- Attendance_ID (Primary Key)  
+- Employee_ID (Foreign Key)  
+- Attendance_Date  
+- Status (Present / Absent / Leave)  
+
+This table helps monitor daily attendance and analyze work patterns.
+
+---
+
+## Relationship Structure  
+
+- Each employee belongs to one department.  
+- Each employee is assigned one job role.  
+- Each employee can have multiple salary records.  
+- Each employee can have multiple attendance records.  
+
+Primary and Foreign Key constraints ensure:
+
+- Data consistency  
+- Referential integrity  
+- Elimination of redundancy  
+- Efficient relational querying  
+
+---
+
+## Features  
+
+- Structured employee data management  
+- Department and role classification  
+- Salary record maintenance  
+- Attendance tracking system  
+- Relational database integrity using constraints  
+
+---
+
+## Future Scope  
+
+- Integration with payroll automation  
+- Web-based interface for HR access  
+- Employee self-service module  
+- Extended reporting and analytics features  
+
+---
+
+## Learning Outcomes  
+
+- Practical implementation of relational database design  
+- Use of primary and foreign key constraints  
+- Schema normalization techniques  
+- Writing SQL queries using joins  
+- Managing databases using MariaDB  
+
+---
+
+## Authors  
+
+- **Devraj Sangharajka (AU2420181)**  
+- **Dvij Desai (AU2420139)**  
