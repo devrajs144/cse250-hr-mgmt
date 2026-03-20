@@ -1,37 +1,11 @@
-# ==========================================
-# DBMS PROJECT: HR Management System
-# GitHub Documentation: .gitignore
-# ==========================================
+# --- PROTECT SENSITIVE DATA ---
+# This hides your password even if the file is in the Backend folder
+# (Wait! If you want to push app.js, you MUST remove your password first)
+# Backend/app.js
 
-# --- 1. Private Project Logic & UI ---
-# These contain my database credentials and
-# minimalist frontend development.
-app.js
-node.js
-index.html
-
-# --- 2. Dependencies ---
-# Large folders that can be recreated with 'npm install'
+# --- BLOCK HEAVY JUNK ---
 node_modules/
-package-lock.json
-
-# --- 3. IDE Settings (IntelliJ IDEA) ---
-# Local configuration files for my MacBook setup
 .idea/
-*.iws
-*.iml
-*.ipr
-out/
-
-# --- 4. System Files ---
-# Hidden OS files that clutter the repository
 .DS_Store
-Thumbs.db
-desktop.ini
-
-# --- 5. Security & Logs ---
-# Prevents sensitive passwords and error logs from leaking
-.env
-*.log
-npm-debug.log*
-
+package-lock.json
+dist/

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HR Management Dashboard</title>
+    <style>
+        /* Minimalist Aesthetic Styling */
+        body {
+            margin: 0;
+            padding: 40px;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(15px); /* Elegant blurred texture */
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-weight: 300; color: #4a4a4a; letter-spacing: 1px; border-bottom: none; }
+
+        /* Navigation Tabs */
+        .nav-tabs { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
+        .nav-tabs button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: 0.3s;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        .nav-tabs button.active {
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            color: #000;
+            font-weight: 600;
+        }
+
+        /* Modern Table Styling */
+        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 10px; }
+        th { text-align: left; padding: 15px; color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
+        td { background: white; padding: 15px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; color: #444; }
+        td:first-child { border-left: 1px solid #f0f0f0; border-radius: 12px 0 0 12px; }
+        td:last-child { border-right: 1px solid #f0f0f0; border-radius: 0 12px 12px 0; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>HR Management Portal</h1>
+
+    <div class="nav-tabs">
+        <button onclick="fetchData('employees', this)" class="active">Employees</button>
+        <button onclick="fetchData('departments', this)">Departments</button>
+        <button onclick="fetchData('projects', this)">Projects</button>
+        <button onclick="fetchData('payroll', this)">Payroll</button>
+        <!--        <button onclick="fetchData('assignments', this)">Assignments</button>-->
+    </div>
+
+    <table id="dataTable">
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
+    </table>
+</div>
+
+<script>
+    // This function talks to your Node.js server
+    async function fetchData(table, btn) {
+        // UI: Toggle active button
+        document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        try {
+            const response = await fetch(`http://localhost:3000/api/${table}`);
+            const data = await response.json();
+            renderTable(data);
+        } catch (err) {
+            console.error("Connection failed. Is 'node app.js' running?", err);
+        }
+    }
+
+    function renderTable(data) {
+        const head = document.getElementById('tableHead');
+        const body = document.getElementById('tableBody');
+        head.innerHTML = "";
+        body.innerHTML = "";
+
+        if (data.length > 0) {
+            // Automatically find columns from your SQL results
+            const columns = Object.keys(data[0]);
+            head.innerHTML = `<tr>${columns.map(col => `<th>${col.replace('_', ' ')}</th>`).join('')}</tr>`;
+
+            body.innerHTML = data.map(row => `
+                <tr>${columns.map(col => `<td>${row[col]}</td>`).join('')}</tr>
+            `).join('');
+        }
+    }
+
+    // Auto-load employees when page opens
+    window.onload = () => fetchData('employees', document.querySelector('.active'));
+</script>
+</body>
+</html>
