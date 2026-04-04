@@ -1,45 +1,106 @@
 const express = require('express');
-const mariadb = require('mariadb');
-const cors = require('cors');
+const mysql   = require('mysql2/promise');
+const cors    = require('cors');
+
 const app = express();
 app.use(cors());
+app.use(express.json());
 
-const pool = mariadb.createPool({
-    host: 'localhost', user: 'root', password: 'password123', database: 'cse250_hr'
+// ── DATABASE CONNECTION ───────────────────────────────────────────────────────
+const pool = mysql.createPool({
+    host:     'localhost',
+    user:     'root',
+    password: 'admin123',
+    database: 'cse250_hr'
 });
 
-const queries = {
-    employees: "SELECT e.id, e.full_name as Name, e.role as Role, d.dept_name as Dept, e.salary FROM employees e JOIN departments d ON e.dept_id = d.dept_id",
-    departments: "SELECT * FROM departments",
-    projects: "SELECT * FROM projects",
-    payroll: "SELECT p.transaction_id, e.full_name as Employee, p.payment_date, p.amount FROM payroll p JOIN employees e ON p.emp_id = e.id",
-    assignments: "SELECT e.full_name as Employee, p.project_name as Project FROM employee_projects ep JOIN employees e ON ep.emp_id = e.id JOIN projects p ON ep.project_id = p.project_id"
+// ── ALLOWED TABLES (security whitelist) ───────────────────────────────────────
+const ALLOWED = ['employees', 'departments', 'projects', 'payroll'];
+
+// ── RICH JOINED QUERIES ───────────────────────────────────────────────────────
+const QUERIES = {
+    employees: `
+        SELECT
+            e.id                                        AS 'ID',
+            e.full_name                                 AS 'Full Name',
+            e.role                                      AS 'Role',
+            d.dept_name                                 AS 'Department',
+            CONCAT('₹ ', FORMAT(e.salary, 0))           AS 'Salary'
+        FROM employees e
+        LEFT JOIN departments d ON e.dept_id = d.dept_id
+        ORDER BY e.id
+    `,
+    departments: `
+        SELECT
+            d.dept_id                                               AS 'ID',
+            d.dept_name                                             AS 'Department',
+            COUNT(e.id)                                             AS 'Headcount',
+            CONCAT('₹ ', FORMAT(COALESCE(SUM(e.salary),0), 0))     AS 'Total Payroll'
+        FROM departments d
+        LEFT JOIN employees e ON d.dept_id = e.dept_id
+        GROUP BY d.dept_id, d.dept_name
+        ORDER BY d.dept_id
+    `,
+    projects: `
+        SELECT
+            project_id                                  AS 'ID',
+            project_name                                AS 'Project Name',
+            CONCAT('₹ ', FORMAT(budget, 0))             AS 'Budget'
+        FROM projects
+        ORDER BY project_id
+    `,
+    payroll: `
+        SELECT
+            p.transaction_id                            AS 'Txn ID',
+            e.full_name                                 AS 'Employee',
+            DATE_FORMAT(p.payment_date, '%d %b %Y')     AS 'Payment Date',
+            CONCAT('₹ ', FORMAT(p.amount, 0))           AS 'Amount'
+        FROM payroll p
+        LEFT JOIN employees e ON p.emp_id = e.id
+        ORDER BY p.payment_date DESC
+    `
 };
 
-app.get('/api/:table', async (req, res) => {
-    let conn;
+// ── STATS ENDPOINT ────────────────────────────────────────────────────────────
+app.get('/api/stats', async (req, res) => {
     try {
-        conn = await pool.getConnection();
-        const rows = await conn.query(queries[req.params.table] || "SELECT 1");
-        res.json(rows);
-    } catch (err) { res.status(500).json(err); }
-    finally { if (conn) conn.end(); }
-});
-
-app.listen(3000, () => console.log('Server running on http://localhost:3000'));
-
-app.get('/api/:table', async (req, res) => {
-    let conn;
-    try {
-        conn = await pool.getConnection();
-        const rows = await conn.query(queries[req.params.table] || "SELECT 1");
-        res.json(rows);
+        const [[emp]]  = await pool.query('SELECT COUNT(*) AS c FROM employees');
+        const [[dept]] = await pool.query('SELECT COUNT(*) AS c FROM departments');
+        const [[proj]] = await pool.query('SELECT COUNT(*) AS c FROM projects');
+        const [[pay]]  = await pool.query('SELECT COALESCE(SUM(amount),0) AS t FROM payroll');
+        res.json({
+            employees:   emp.c,
+            departments: dept.c,
+            projects:    proj.c,
+            payroll:     Number(pay.t)
+        });
     } catch (err) {
-        res.status(500).send(err);
-    } finally {
-        if (conn) conn.end();
+        res.status(500).json({ error: err.message });
     }
 });
 
+// ── TABLE DATA ENDPOINT ───────────────────────────────────────────────────────
+app.get('/api/:table', async (req, res) => {
+    const table = req.params.table;
+    if (!ALLOWED.includes(table)) {
+        return res.status(400).json({ error: 'Invalid table.' });
+    }
+    try {
+        const [rows] = await pool.query(QUERIES[table]);
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
 
-app.listen(3000, () => console.log('Backend running on http://localhost:3000'));
+// ── START ─────────────────────────────────────────────────────────────────────
+app.listen(3000, () => {
+    console.log('');
+    console.log('  ╔══════════════════════════════════════════╗');
+    console.log('  ║   MyHR Global  –  API is live 🚀         ║');
+    console.log('  ║   http://localhost:3000                  ║');
+    console.log('  ╚══════════════════════════════════════════╝');
+    console.log('');
+    console.log('  Open index.html via Apache to use the app.');
+    console.log('');
+});

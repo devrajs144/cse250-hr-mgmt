@@ -1,110 +1,637 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>HR Management Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MyHR Global</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet" />
+
     <style>
-        /* Minimalist Aesthetic Styling */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --ink:     #0a0a0f;
+            --paper:   #f5f2ec;
+            --cream:   #ede9df;
+            --accent:  #c8a96e;
+            --purple:  #7c6fcd;
+            --muted:   #6b6762;
+            --white:   #ffffff;
+            --red:     #e05252;
+            --rad:     18px;
+            --shadow:  0 8px 40px rgba(10,10,15,.10);
+            --ease:    .35s cubic-bezier(.4,0,.2,1);
+        }
+
         body {
-            margin: 0;
-            padding: 40px;
-            font-family: 'Segoe UI', sans-serif;
-            background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
+            font-family: 'DM Sans', sans-serif;
+            background: var(--paper);
+            color: var(--ink);
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1000px;
-            margin: auto;
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(15px); /* Elegant blurred texture */
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        /* ── PAGES ── */
+        .page { display: none; min-height: 100vh; opacity: 0; transition: opacity var(--ease); }
+        .page.active { display: flex; flex-direction: column; }
+        .page.visible { opacity: 1; }
+
+        /* ══════════════════════════════════
+           LANDING
+        ══════════════════════════════════ */
+        #landing {
+            flex-direction: row;
+            align-items: stretch;
+            position: relative;
+            overflow: hidden;
+        }
+        .blob {
+            position: absolute; border-radius: 50%;
+            filter: blur(90px); pointer-events: none; z-index: 0;
+        }
+        .blob-gold {
+            width: 650px; height: 650px;
+            background: radial-gradient(circle, #c8a96e40, transparent 70%);
+            top: -180px; right: -150px;
+        }
+        .blob-purple {
+            width: 450px; height: 450px;
+            background: radial-gradient(circle, #7c6fcd30, transparent 70%);
+            bottom: -120px; left: -80px;
         }
 
-        h1 { font-weight: 300; color: #4a4a4a; letter-spacing: 1px; border-bottom: none; }
-
-        /* Navigation Tabs */
-        .nav-tabs { display: flex; gap: 10px; margin-bottom: 25px; flex-wrap: wrap; }
-        .nav-tabs button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: 0.3s;
-            color: #555;
-            font-size: 0.9rem;
-        }
-        .nav-tabs button.active {
-            background: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            color: #000;
-            font-weight: 600;
+        /* Left colour strip */
+        .l-strip {
+            width: 6px; flex-shrink: 0; z-index: 1;
+            background: linear-gradient(to bottom, var(--accent), var(--purple));
         }
 
-        /* Modern Table Styling */
-        table { width: 100%; border-collapse: separate; border-spacing: 0 8px; margin-top: 10px; }
-        th { text-align: left; padding: 15px; color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
-        td { background: white; padding: 15px; border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; color: #444; }
-        td:first-child { border-left: 1px solid #f0f0f0; border-radius: 12px 0 0 12px; }
-        td:last-child { border-right: 1px solid #f0f0f0; border-radius: 0 12px 12px 0; }
+        /* Left copy */
+        .l-copy {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; padding: 80px 8% 80px 7%;
+            position: relative; z-index: 1;
+        }
+
+        .l-eyebrow {
+            font-size: .72rem; font-weight: 500; letter-spacing: .22em;
+            text-transform: uppercase; color: var(--accent);
+            margin-bottom: 28px;
+            opacity: 0; transform: translateY(18px);
+            animation: rise .7s .1s forwards;
+        }
+        .l-headline {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(3.5rem, 8vw, 8.5rem);
+            font-weight: 800; line-height: .9; letter-spacing: -3px;
+            opacity: 0; transform: translateY(28px);
+            animation: rise .8s .2s forwards;
+        }
+        .l-headline span {
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text; display: block;
+        }
+        .l-sub {
+            margin-top: 30px; font-size: 1.05rem; color: var(--muted);
+            max-width: 420px; line-height: 1.7;
+            opacity: 0; animation: rise .8s .38s forwards;
+        }
+        .l-actions {
+            margin-top: 52px; display: flex; gap: 14px; align-items: center;
+            opacity: 0; animation: rise .8s .52s forwards;
+        }
+        .l-stats {
+            margin-top: 72px; display: flex; gap: 44px;
+            opacity: 0; animation: rise .8s .68s forwards;
+        }
+        .l-stat-num {
+            font-family: 'Syne', sans-serif; font-size: 2rem;
+            font-weight: 800; line-height: 1; display: block;
+        }
+        .l-stat-label { font-size: .72rem; color: var(--muted); margin-top: 4px; display: block; }
+
+        .l-footer {
+            position: absolute; bottom: 36px; left: 7%; right: 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1; opacity: 0; animation: rise .7s .85s forwards;
+            font-size: .7rem; color: var(--muted); letter-spacing: .1em; text-transform: uppercase;
+        }
+
+        /* Right preview card */
+        .l-visual {
+            width: 38%; display: flex; align-items: center;
+            justify-content: center; padding: 60px 5%;
+            position: relative; z-index: 1;
+        }
+        .preview-card {
+            background: var(--white); border-radius: 26px; padding: 28px;
+            box-shadow: var(--shadow), 0 0 0 1px rgba(200,169,110,.12);
+            width: 100%; max-width: 320px;
+            opacity: 0; transform: translateY(18px) scale(.97);
+            animation: rise .9s .48s forwards;
+        }
+        .pc-label {
+            font-size: .65rem; letter-spacing: .16em; text-transform: uppercase;
+            color: var(--muted); margin-bottom: 18px;
+        }
+        .pc-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 13px 0; border-bottom: 1px solid var(--cream);
+        }
+        .pc-row:last-child { border-bottom: none; }
+        .pc-av {
+            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Syne', sans-serif; font-weight: 800;
+            font-size: .78rem; color: #fff;
+        }
+        .pc-name { font-size: .86rem; font-weight: 500; }
+        .pc-role { font-size: .7rem; color: var(--muted); margin-top: 1px; }
+        .pc-badge {
+            margin-left: auto; padding: 3px 10px; border-radius: 100px;
+            font-size: .62rem; font-weight: 600;
+        }
+        .bg-green { background: #d1fae5; color: #065f46; }
+        .bg-blue  { background: #dbeafe; color: #1e40af; }
+        .bg-amber { background: #fef3c7; color: #92400e; }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+            font-weight: 500; transition: var(--ease); text-decoration: none;
+        }
+        .btn-dark {
+            background: var(--ink); color: var(--white);
+            padding: 15px 34px; border-radius: 100px; font-size: .95rem;
+        }
+        .btn-dark:hover { background: var(--purple); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(124,111,205,.28); }
+        .btn-outline {
+            background: transparent; color: var(--muted);
+            padding: 15px 22px; border-radius: 100px; font-size: .88rem;
+            border: 1.5px solid var(--cream);
+        }
+        .btn-outline:hover { border-color: var(--accent); color: var(--ink); }
+
+        /* ══════════════════════════════════
+           LOGIN
+        ══════════════════════════════════ */
+        #login {
+            justify-content: center; align-items: center;
+            background: var(--ink);
+            background-image:
+                    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,.018) 40px, rgba(255,255,255,.018) 41px),
+                    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,.018) 40px, rgba(255,255,255,.018) 41px);
+        }
+        .login-card {
+            width: 90%; max-width: 420px;
+            background: rgba(255,255,255,.05);
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 26px; padding: 50px 42px;
+            backdrop-filter: blur(18px);
+            box-shadow: 0 40px 80px rgba(0,0,0,.4);
+            opacity: 0; transform: scale(.96);
+            animation: popIn .5s .1s forwards;
+        }
+        .login-logo {
+            font-family: 'Syne', sans-serif; font-size: 1.35rem;
+            font-weight: 800; color: #fff; margin-bottom: 6px;
+        }
+        .login-logo span { color: var(--accent); }
+        .login-sub { font-size: .8rem; color: rgba(255,255,255,.38); margin-bottom: 36px; }
+
+        .field-label {
+            display: block; font-size: .68rem; font-weight: 500;
+            letter-spacing: .14em; text-transform: uppercase;
+            color: rgba(255,255,255,.38); margin-bottom: 8px;
+        }
+        .login-input {
+            width: 100%; padding: 14px 16px; margin-bottom: 18px;
+            background: rgba(255,255,255,.07);
+            border: 1px solid rgba(255,255,255,.11);
+            border-radius: 13px; color: #fff;
+            font-family: 'DM Sans', sans-serif; font-size: .93rem; outline: none;
+            transition: var(--ease);
+        }
+        .login-input::placeholder { color: rgba(255,255,255,.2); }
+        .login-input:focus {
+            border-color: var(--accent);
+            background: rgba(200,169,110,.08);
+            box-shadow: 0 0 0 3px rgba(200,169,110,.13);
+        }
+        .login-error {
+            color: #fca5a5; font-size: .78rem;
+            margin-top: -10px; margin-bottom: 14px; display: none;
+        }
+        .login-back {
+            display: block; text-align: center; margin-top: 22px;
+            font-size: .75rem; color: rgba(255,255,255,.25);
+            cursor: pointer; transition: color var(--ease);
+        }
+        .login-back:hover { color: #fff; }
+
+        /* ══════════════════════════════════
+           DASHBOARD
+        ══════════════════════════════════ */
+        #dashboard { flex-direction: row; align-items: stretch; }
+
+        /* Sidebar */
+        .sidebar {
+            width: 252px; min-height: 100vh; flex-shrink: 0;
+            background: var(--ink); display: flex; flex-direction: column;
+            padding: 38px 0; position: sticky; top: 0; height: 100vh;
+        }
+        .sb-logo {
+            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem;
+            color: #fff; padding: 0 26px; margin-bottom: 44px; letter-spacing: -.5px;
+        }
+        .sb-logo span { color: var(--accent); }
+        .sb-section {
+            font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
+            color: rgba(255,255,255,.22); padding: 0 26px; margin-bottom: 8px;
+        }
+        .nav-btn {
+            display: flex; align-items: center; gap: 12px;
+            padding: 12px 26px; margin: 2px 10px;
+            border-radius: 13px; cursor: pointer; font-size: .88rem;
+            color: rgba(255,255,255,.42); transition: var(--ease);
+            border: none; background: none; width: calc(100% - 20px); text-align: left;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .nav-btn:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.75); }
+        .nav-btn.active { background: var(--accent); color: var(--ink); font-weight: 500; }
+        .nav-icon { font-size: 1rem; flex-shrink: 0; }
+
+        .sb-bottom { margin-top: auto; padding: 0 10px; }
+        .sb-user {
+            display: flex; align-items: center; gap: 11px;
+            padding: 13px 16px; border-radius: 13px;
+            background: rgba(255,255,255,.05);
+        }
+        .sb-avatar {
+            width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+            background: linear-gradient(135deg, var(--accent), var(--purple));
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Syne', sans-serif; font-weight: 800;
+            font-size: .75rem; color: #fff;
+        }
+        .sb-uname { font-size: .8rem; font-weight: 500; color: #fff; }
+        .sb-urole { font-size: .68rem; color: rgba(255,255,255,.32); }
+        .logout-btn {
+            margin-left: auto; background: none; border: none;
+            color: rgba(255,255,255,.28); cursor: pointer; font-size: .95rem;
+            transition: color var(--ease); padding: 4px;
+        }
+        .logout-btn:hover { color: var(--red); }
+
+        /* Main */
+        .main { flex: 1; padding: 46px 50px; overflow-y: auto; min-height: 100vh; }
+        .main-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 34px; }
+        .main-title { font-family: 'Syne', sans-serif; font-size: 2.1rem; font-weight: 800; letter-spacing: -1px; }
+        .main-date { font-size: .76rem; color: var(--muted); margin-top: 4px; }
+
+        /* Stat cards */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 36px; }
+        .stat-card {
+            background: var(--white); border-radius: var(--rad); padding: 22px 24px;
+            box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,.04);
+            transition: transform var(--ease);
+        }
+        .stat-card:hover { transform: translateY(-3px); }
+        .sc-icon {
+            width: 42px; height: 42px; border-radius: 11px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.2rem; margin-bottom: 14px;
+        }
+        .sc-val { font-family: 'Syne', sans-serif; font-size: 1.9rem; font-weight: 800; line-height: 1; margin-bottom: 5px; }
+        .sc-lbl { font-size: .74rem; color: var(--muted); }
+
+        /* Table */
+        .table-wrap {
+            background: var(--white); border-radius: var(--rad);
+            box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,.04); overflow: hidden;
+        }
+        .table-toolbar {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 20px 26px; border-bottom: 1px solid var(--cream);
+        }
+        .table-toolbar-left { display: flex; align-items: center; gap: 10px; }
+        .table-title { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; }
+        .row-pill {
+            background: var(--cream); color: var(--muted);
+            font-size: .7rem; padding: 3px 11px; border-radius: 100px;
+        }
+        .search-wrap {
+            display: flex; align-items: center; gap: 7px;
+            background: var(--paper); border: 1px solid var(--cream);
+            border-radius: 10px; padding: 8px 13px;
+        }
+        .search-wrap input {
+            border: none; background: none; outline: none;
+            font-family: 'DM Sans', sans-serif; font-size: .83rem;
+            color: var(--ink); width: 175px;
+        }
+        .search-wrap input::placeholder { color: var(--muted); }
+
+        /* Data table */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table thead tr { border-bottom: 2px solid var(--cream); }
+        .data-table th {
+            padding: 13px 20px; text-align: left;
+            font-size: .65rem; font-weight: 600; letter-spacing: .13em;
+            text-transform: uppercase; color: var(--muted); white-space: nowrap;
+        }
+        .data-table td { padding: 15px 20px; font-size: .86rem; border-bottom: 1px solid var(--cream); }
+        .data-table tbody tr:last-child td { border-bottom: none; }
+        .data-table tbody tr { transition: background var(--ease); }
+        .data-table tbody tr:hover { background: #faf9f6; }
+        .data-table td:first-child { font-family: 'Syne', sans-serif; font-weight: 700; font-size: .75rem; color: var(--muted); }
+
+        .spinner-wrap { display: flex; align-items: center; justify-content: center; padding: 60px; gap: 12px; color: var(--muted); font-size: .84rem; }
+        .spinner { width: 19px; height: 19px; border: 2px solid var(--cream); border-top-color: var(--accent); border-radius: 50%; animation: spin .65s linear infinite; }
+        .empty-state { padding: 60px; text-align: center; color: var(--muted); }
+        .empty-icon { font-size: 2.2rem; margin-bottom: 10px; }
+        .error-wrap { padding: 48px; text-align: center; }
+        .error-pill { display: inline-flex; align-items: center; gap: 8px; background: #fee2e2; color: #991b1b; padding: 10px 20px; border-radius: 100px; font-size: .8rem; }
+
+        .tbl-anim { animation: fadeUp .32s ease forwards; }
+
+        /* ── ANIMATIONS ── */
+        @keyframes rise   { to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes popIn  { to { opacity: 1; transform: scale(1); } }
+        @keyframes spin   { to { transform: rotate(360deg); } }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 960px) {
+            .l-visual { display: none; }
+            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            .sidebar { width: 220px; }
+            .main { padding: 32px 22px; }
+        }
+        @media (max-width: 640px) {
+            .sidebar { display: none; }
+            .stats-grid { grid-template-columns: 1fr 1fr; }
+            .main { padding: 24px 16px; }
+        }
     </style>
 </head>
 <body>
-<div class="container">
-    <h1>HR Management Portal</h1>
 
-    <div class="nav-tabs">
-        <button onclick="fetchData('employees', this)" class="active">Employees</button>
-        <button onclick="fetchData('departments', this)">Departments</button>
-        <button onclick="fetchData('projects', this)">Projects</button>
-        <button onclick="fetchData('payroll', this)">Payroll</button>
-        <!--        <button onclick="fetchData('assignments', this)">Assignments</button>-->
+<!-- ══════════════════════════════════════════════════
+     LANDING
+══════════════════════════════════════════════════ -->
+<div id="landing" class="page">
+    <div class="blob blob-gold"></div>
+    <div class="blob blob-purple"></div>
+    <div class="l-strip"></div>
+
+    <div class="l-copy">
+        <p class="l-eyebrow">✦ Enterprise HR Platform &middot; Ahmedabad</p>
+        <h1 class="l-headline">MyHR<span>Global.</span></h1>
+        <p class="l-sub">A centralised people-operations platform — manage teams, track payroll, and run projects in one unified view.</p>
+
+        <div class="l-actions">
+            <button class="btn btn-dark" onclick="showPage('login')">Access Portal &rarr;</button>
+        </div>
+
+        <div class="l-stats">
+            <div><span class="l-stat-num" id="ls-emp">—</span><span class="l-stat-label">Employees</span></div>
+            <div><span class="l-stat-num" id="ls-dept">—</span><span class="l-stat-label">Departments</span></div>
+            <div><span class="l-stat-num" id="ls-proj">—</span><span class="l-stat-label">Projects</span></div>
+        </div>
     </div>
 
-    <table id="dataTable">
-        <thead id="tableHead"></thead>
-        <tbody id="tableBody"></tbody>
-    </table>
+    <div class="l-visual">
+        <div class="preview-card">
+            <p class="pc-label">Live Snapshot &middot; HR Data</p>
+            <div class="pc-row">
+                <div class="pc-av" style="background:linear-gradient(135deg,#c8a96e,#e8c97e)">AS</div>
+                <div><div class="pc-name">Aarav Sharma</div><div class="pc-role">Software Engineer</div></div>
+                <span class="pc-badge bg-green">Active</span>
+            </div>
+            <div class="pc-row">
+                <div class="pc-av" style="background:linear-gradient(135deg,#7c6fcd,#a89de8)">PM</div>
+                <div><div class="pc-name">Priya Mehta</div><div class="pc-role">HR Manager</div></div>
+                <span class="pc-badge bg-blue">Active</span>
+            </div>
+            <div class="pc-row">
+                <div class="pc-av" style="background:linear-gradient(135deg,#4ade80,#22d3ee)">MJ</div>
+                <div><div class="pc-name">Meera Joshi</div><div class="pc-role">Portfolio Manager</div></div>
+                <span class="pc-badge bg-amber">Finance</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="l-footer">
+        <span>MyHR Global &copy; 2026</span>
+        <span>CSE 250 &middot; DBMS Project</span>
+    </div>
 </div>
 
+
+<!-- ══════════════════════════════════════════════════
+     LOGIN
+══════════════════════════════════════════════════ -->
+<div id="login" class="page">
+    <div class="login-card">
+        <div class="login-logo">MyHR <span>Global.</span></div>
+        <p class="login-sub">Sign in to your admin portal</p>
+
+        <label class="field-label" for="usr">Username</label>
+        <input class="login-input" type="text" id="usr" placeholder="Enter username" autocomplete="username" />
+
+        <label class="field-label" for="pwd">Password</label>
+        <input class="login-input" type="password" id="pwd" placeholder="Enter password" autocomplete="current-password" />
+
+        <p class="login-error" id="login-err">⚠ Invalid credentials — try again.</p>
+
+        <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="doLogin()">Sign In</button>
+
+        <a class="login-back" onclick="showPage('landing')">← Back to homepage</a>
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     DASHBOARD
+══════════════════════════════════════════════════ -->
+<div id="dashboard" class="page">
+
+    <aside class="sidebar">
+        <div class="sb-logo">MyHR <span>Global.</span></div>
+
+        <p class="sb-section">Data Tables</p>
+        <button class="nav-btn active" id="nav-employees"   onclick="load('employees',   this)"><span class="nav-icon">👤</span> Employees</button>
+        <button class="nav-btn"        id="nav-departments" onclick="load('departments', this)"><span class="nav-icon">🏢</span> Departments</button>
+        <button class="nav-btn"        id="nav-projects"    onclick="load('projects',    this)"><span class="nav-icon">🗂</span> Projects</button>
+        <button class="nav-btn"        id="nav-payroll"     onclick="load('payroll',     this)"><span class="nav-icon">💰</span> Payroll</button>
+
+        <div class="sb-bottom">
+            <div class="sb-user">
+                <div class="sb-avatar">AD</div>
+                <div><div class="sb-uname">Admin</div><div class="sb-urole">Super Admin</div></div>
+                <button class="logout-btn" onclick="showPage('landing')" title="Sign out">⏻</button>
+            </div>
+        </div>
+    </aside>
+
+    <main class="main">
+        <div class="main-header">
+            <div>
+                <h1 class="main-title" id="pg-title">Employees</h1>
+                <p class="main-date"   id="pg-date"></p>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card"><div class="sc-icon" style="background:#fef3c7">👤</div><div class="sc-val" id="sc-emp">—</div><div class="sc-lbl">Total Employees</div></div>
+            <div class="stat-card"><div class="sc-icon" style="background:#dbeafe">🏢</div><div class="sc-val" id="sc-dept">—</div><div class="sc-lbl">Departments</div></div>
+            <div class="stat-card"><div class="sc-icon" style="background:#d1fae5">🗂</div><div class="sc-val" id="sc-proj">—</div><div class="sc-lbl">Projects</div></div>
+            <div class="stat-card"><div class="sc-icon" style="background:#ede9fe">💰</div><div class="sc-val" id="sc-pay">—</div><div class="sc-lbl">Total Payroll Paid</div></div>
+        </div>
+
+        <div class="table-wrap">
+            <div class="table-toolbar">
+                <div class="table-toolbar-left">
+                    <span class="table-title" id="tbl-label">Employees</span>
+                    <span class="row-pill"    id="row-count">0 rows</span>
+                </div>
+                <div class="search-wrap">
+                    <span style="color:var(--muted);font-size:.9rem">🔍</span>
+                    <input type="text" id="search-input" placeholder="Filter table…" oninput="filterTable()" />
+                </div>
+            </div>
+            <div id="tbl-container">
+                <div class="spinner-wrap"><div class="spinner"></div> Loading…</div>
+            </div>
+        </div>
+    </main>
+
+</div>
+
+
 <script>
-    // This function talks to your Node.js server
-    async function fetchData(table, btn) {
-        // UI: Toggle active button
-        document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+    /* ── ROUTING ───────────────────────────────────────────── */
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active','visible'));
+        const el = document.getElementById(id);
+        el.classList.add('active');
+        requestAnimationFrame(() => el.classList.add('visible'));
+    }
+
+    /* ── LOGIN ─────────────────────────────────────────────── */
+    function doLogin() {
+        const u = document.getElementById('usr').value.trim();
+        const p = document.getElementById('pwd').value.trim();
+        const err = document.getElementById('login-err');
+        if (u === 'admin' && p === 'admin') {
+            err.style.display = 'none';
+            showPage('dashboard');
+            initDashboard();
+        } else {
+            err.style.display = 'block';
+            document.getElementById('pwd').value = '';
+            document.getElementById('pwd').focus();
+        }
+    }
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && document.getElementById('login').classList.contains('active')) doLogin();
+    });
+
+    /* ── DASHBOARD INIT ────────────────────────────────────── */
+    function initDashboard() {
+        const now = new Date();
+        document.getElementById('pg-date').textContent =
+            now.toLocaleDateString('en-IN', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+        fetch('http://localhost:3000/api/stats')
+            .then(r => { if (!r.ok) throw new Error(); return r.json(); })
+            .then(d => {
+                document.getElementById('sc-emp').textContent  = Number.isFinite(d.employees)   ? d.employees   : '—';
+                document.getElementById('sc-dept').textContent = Number.isFinite(d.departments) ? d.departments : '—';
+                document.getElementById('sc-proj').textContent = Number.isFinite(d.projects)    ? d.projects    : '—';
+                document.getElementById('sc-pay').textContent  = Number.isFinite(d.payroll)     ? '₹' + fmt(d.payroll) : '—';
+                document.getElementById('ls-emp').textContent  = d.employees;
+                document.getElementById('ls-dept').textContent = d.departments;
+                document.getElementById('ls-proj').textContent = d.projects;
+            }).catch(() => {
+            ['sc-emp','sc-dept','sc-proj','sc-pay'].forEach(id => document.getElementById(id).textContent = '—');
+        });
+
+        load('employees', document.getElementById('nav-employees'));
+    }
+
+    function fmt(n) {
+        if (n >= 1e7) return (n/1e7).toFixed(1)+'Cr';
+        if (n >= 1e5) return (n/1e5).toFixed(1)+'L';
+        return Number(n).toLocaleString('en-IN');
+    }
+
+    /* ── TABLE ─────────────────────────────────────────────── */
+    let allRows = [];
+
+    async function load(table, btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
+        const labels = { employees:'Employees', departments:'Departments', projects:'Projects', payroll:'Payroll' };
+        document.getElementById('pg-title').textContent  = labels[table];
+        document.getElementById('tbl-label').textContent = labels[table];
+        document.getElementById('search-input').value = '';
+
+        document.getElementById('tbl-container').innerHTML =
+            `<div class="spinner-wrap"><div class="spinner"></div> Fetching ${labels[table]}…</div>`;
+
         try {
-            const response = await fetch(`http://localhost:3000/api/${table}`);
-            const data = await response.json();
-            renderTable(data);
-        } catch (err) {
-            console.error("Connection failed. Is 'node app.js' running?", err);
+            const r = await fetch(`http://localhost:3000/api/${table}`);
+            if (!r.ok) throw new Error();
+            allRows = await r.json();
+            renderTable(allRows);
+        } catch {
+            document.getElementById('tbl-container').innerHTML =
+                `<div class="error-wrap"><div class="error-pill">⚠ Could not connect — is <code>node app.js</code> running on port 3000?</div></div>`;
+            document.getElementById('row-count').textContent = '—';
         }
     }
 
     function renderTable(data) {
-        const head = document.getElementById('tableHead');
-        const body = document.getElementById('tableBody');
-        head.innerHTML = "";
-        body.innerHTML = "";
-
-        if (data.length > 0) {
-            // Automatically find columns from your SQL results
-            const columns = Object.keys(data[0]);
-            head.innerHTML = `<tr>${columns.map(col => `<th>${col.replace('_', ' ')}</th>`).join('')}</tr>`;
-
-            body.innerHTML = data.map(row => `
-                <tr>${columns.map(col => `<td>${row[col]}</td>`).join('')}</tr>
-            `).join('');
+        document.getElementById('row-count').textContent = data.length + ' row' + (data.length !== 1 ? 's' : '');
+        if (!data.length) {
+            document.getElementById('tbl-container').innerHTML =
+                `<div class="empty-state"><div class="empty-icon">🗃</div><p>No records found.</p></div>`;
+            return;
         }
+        const cols  = Object.keys(data[0]);
+        const thead = `<thead><tr>${cols.map(c=>`<th>${c}</th>`).join('')}</tr></thead>`;
+        const tbody = `<tbody>${data.map(row =>
+            `<tr>${Object.values(row).map(v =>
+                `<td>${v === null ? '<span style="color:var(--muted)">—</span>' : v}</td>`
+            ).join('')}</tr>`
+        ).join('')}</tbody>`;
+        document.getElementById('tbl-container').innerHTML =
+            `<table class="data-table tbl-anim">${thead}${tbody}</table>`;
     }
 
-    // Auto-load employees when page opens
-    window.onload = () => fetchData('employees', document.querySelector('.active'));
+    function filterTable() {
+        const q = document.getElementById('search-input').value.toLowerCase();
+        const filtered = q ? allRows.filter(r => Object.values(r).some(v => String(v).toLowerCase().includes(q))) : allRows;
+        renderTable(filtered);
+        if (q) document.getElementById('row-count').textContent = filtered.length + ' / ' + allRows.length + ' rows';
+    }
+
+    /* ── BOOT ──────────────────────────────────────────────── */
+    showPage('landing');
+    // Preload landing stats
+    fetch('http://localhost:3000/api/stats')
+        .then(r => r.json())
+        .then(d => {
+            document.getElementById('ls-emp').textContent  = d.employees;
+            document.getElementById('ls-dept').textContent = d.departments;
+            document.getElementById('ls-proj').textContent = d.projects;
+        }).catch(() => {});
 </script>
 </body>
 </html>
