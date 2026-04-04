@@ -12,5 +12,8 @@
 !/Backend/app.js
 !/Backend/package.json
 
-# 4. Also allow the .gitignore itself so people can see your clean setup
+# 4. Also allow the .gitignore itself so people can see yougit add .r clean setup
 !.gitignore
+
+node_modules/
+.DS_Store
