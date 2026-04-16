@@ -35,9 +35,19 @@ CREATE TABLE payroll (
                          FOREIGN KEY (emp_id) REFERENCES employees(id)
 );
 
+CREATE TABLE employee_projects (
+                                   employee_id   INT NOT NULL,
+                                   project_id    INT NOT NULL,
+                                   assigned_date DATE DEFAULT (CURRENT_DATE),
+                                   PRIMARY KEY (employee_id, project_id),
+                                   FOREIGN KEY (employee_id) REFERENCES employees(id),
+                                   FOREIGN KEY (project_id)  REFERENCES projects(project_id)
+);
 -- 3. Populate Data
 INSERT INTO departments (dept_name) VALUES ('IT'), ('HR'), ('Finance'), ('Engineering'), ('Marketing');
 
+-- 2. Populate Assignments for all 10 Employees
+-- We are mapping every Employee ID to a Project ID
 INSERT INTO employees (full_name, role, dept_id, salary) VALUES
                                                              ('Aarav Sharma', 'Software Engineer', 1, 85000.00),
                                                              ('Priya Mehta', 'HR Manager', 2, 75000.00),
@@ -49,6 +59,7 @@ INSERT INTO employees (full_name, role, dept_id, salary) VALUES
                                                              ('Ishani Kapoor', 'DevOps Engineer', 1, 92000.00),
                                                              ('Arjun Reddy', 'Employee Relations', 2, 58000.00),
                                                              ('Meera Joshi', 'Portfolio Manager', 3, 110000.00);
+
 
 INSERT INTO projects (project_name, budget) VALUES
                                                 ('Cloud Migration', 500000.00),
@@ -74,7 +85,30 @@ FROM employees e
          JOIN departments d ON e.dept_id = d.dept_id
          JOIN payroll p ON e.id = p.emp_id;
 
+INSERT INTO employee_projects (employee_id, project_id) VALUES
+                                                            (1, 1), -- Aarav Sharma -> Cloud Migration
+                                                            (2, 2), -- Priya Mehta -> HR Portal Redesign
+                                                            (3, 3), -- Rohan Gupta -> Financial Audit 2026
+                                                            (4, 1), -- Sanya Malhotra -> Cloud Migration
+                                                            (5, 2), -- Vikram Singh -> HR Portal Redesign
+                                                            (6, 1), -- Ananya Iyer -> Cloud Migration
+                                                            (7, 3), -- Kabir Verma -> Financial Audit 2026
+                                                            (8, 1), -- Ishani Kapoor -> Cloud Migration
+                                                            (9, 2), -- Arjun Reddy -> HR Portal Redesign
+                                                            (10, 3); -- Meera Joshi -> Financial Audit 2026
+SELECT
+    e.id AS 'Employee ID',
+    e.full_name AS 'Full Name',
+    p.project_name AS 'Project Name'
+FROM employees e
+         JOIN employee_projects ep ON e.id = ep.employee_id
+         JOIN projects p ON ep.project_id = p.project_id
+ORDER BY e.id;
+
+
+
 SELECT * FROM departments;
 SELECT * FROM employees;
 SELECT * FROM projects;
 SELECT * FROM payroll;
+SELECT * FROM employee_projects;

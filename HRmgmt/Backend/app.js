@@ -15,7 +15,7 @@ const pool = mysql.createPool({
 });
 
 // ── ALLOWED TABLES (security whitelist) ───────────────────────────────────────
-const ALLOWED = ['employees', 'departments', 'projects', 'payroll'];
+const ALLOWED = ['employees', 'departments', 'projects', 'payroll', 'employee_projects'];
 
 // ── RICH JOINED QUERIES ───────────────────────────────────────────────────────
 const QUERIES = {
@@ -58,6 +58,19 @@ const QUERIES = {
         FROM payroll p
         LEFT JOIN employees e ON p.emp_id = e.id
         ORDER BY p.payment_date DESC
+    `,
+    employee_projects: `
+        SELECT
+            e.id                                        AS 'Emp ID',
+            e.full_name                                 AS 'Employee',
+            p.project_name                              AS 'Project',
+            d.dept_name                                 AS 'Department',
+            DATE_FORMAT(ep.assigned_date, '%d %b %Y')  AS 'Assigned Date'
+        FROM employee_projects ep
+        JOIN employees e  ON ep.employee_id  = e.id
+        JOIN projects  p  ON ep.project_id   = p.project_id
+        LEFT JOIN departments d ON e.dept_id = d.dept_id
+        ORDER BY e.id
     `
 };
 
@@ -68,11 +81,13 @@ app.get('/api/stats', async (req, res) => {
         const [[dept]] = await pool.query('SELECT COUNT(*) AS c FROM departments');
         const [[proj]] = await pool.query('SELECT COUNT(*) AS c FROM projects');
         const [[pay]]  = await pool.query('SELECT COALESCE(SUM(amount),0) AS t FROM payroll');
+        const [[asgn]] = await pool.query('SELECT COUNT(*) AS c FROM employee_projects');
         res.json({
             employees:   emp.c,
             departments: dept.c,
             projects:    proj.c,
-            payroll:     Number(pay.t)
+            payroll:     Number(pay.t),
+            assignments: asgn.c
         });
     } catch (err) {
         res.status(500).json({ error: err.message });

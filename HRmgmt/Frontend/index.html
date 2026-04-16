@@ -62,35 +62,27 @@
             bottom: -120px; left: -80px;
         }
 
-        /* Left colour strip */
         .l-strip {
             width: 6px; flex-shrink: 0; z-index: 1;
             background: linear-gradient(to bottom, var(--accent), var(--purple));
         }
 
-        /* Centre copy — now takes full width and centres */
         .l-copy {
             flex: 1; display: flex; flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 80px 12%;
-            position: relative; z-index: 1;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 80px 12%; position: relative; z-index: 1;
         }
 
         .l-eyebrow {
             font-size: .72rem; font-weight: 500; letter-spacing: .22em;
-            text-transform: uppercase; color: var(--accent);
-            margin-bottom: 28px;
-            opacity: 0; transform: translateY(18px);
-            animation: rise .7s .1s forwards;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 28px;
+            opacity: 0; transform: translateY(18px); animation: rise .7s .1s forwards;
         }
         .l-headline {
             font-family: 'Syne', sans-serif;
             font-size: clamp(4rem, 10vw, 10rem);
             font-weight: 800; line-height: .9; letter-spacing: -4px;
-            opacity: 0; transform: translateY(28px);
-            animation: rise .8s .2s forwards;
+            opacity: 0; transform: translateY(28px); animation: rise .8s .2s forwards;
         }
         .l-headline span {
             background: linear-gradient(135deg, var(--accent), var(--purple));
@@ -104,8 +96,7 @@
         }
         .l-actions {
             margin-top: 52px; display: flex; gap: 14px; align-items: center;
-            justify-content: center;
-            opacity: 0; animation: rise .8s .52s forwards;
+            justify-content: center; opacity: 0; animation: rise .8s .52s forwards;
         }
         .l-stats {
             margin-top: 72px; display: flex; gap: 56px; justify-content: center;
@@ -135,12 +126,6 @@
             padding: 15px 34px; border-radius: 100px; font-size: .95rem;
         }
         .btn-dark:hover { background: var(--purple); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(124,111,205,.28); }
-        .btn-outline {
-            background: transparent; color: var(--muted);
-            padding: 15px 22px; border-radius: 100px; font-size: .88rem;
-            border: 1.5px solid var(--cream);
-        }
-        .btn-outline:hover { border-color: var(--accent); color: var(--ink); }
 
         /* ══════════════════════════════════
            LOGIN
@@ -154,21 +139,14 @@
         }
         .login-card {
             width: 90%; max-width: 420px;
-            background: rgba(255,255,255,.05);
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 26px; padding: 50px 42px;
-            backdrop-filter: blur(18px);
+            background: rgba(255,255,255,.05); border: 1px solid rgba(255,255,255,.1);
+            border-radius: 26px; padding: 50px 42px; backdrop-filter: blur(18px);
             box-shadow: 0 40px 80px rgba(0,0,0,.4);
-            opacity: 0; transform: scale(.96);
-            animation: popIn .5s .1s forwards;
+            opacity: 0; transform: scale(.96); animation: popIn .5s .1s forwards;
         }
-        .login-logo {
-            font-family: 'Syne', sans-serif; font-size: 1.35rem;
-            font-weight: 800; color: #fff; margin-bottom: 6px;
-        }
+        .login-logo { font-family: 'Syne', sans-serif; font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 6px; }
         .login-logo span { color: var(--accent); }
         .login-sub { font-size: .8rem; color: rgba(255,255,255,.38); margin-bottom: 36px; }
-
         .field-label {
             display: block; font-size: .68rem; font-weight: 500;
             letter-spacing: .14em; text-transform: uppercase;
@@ -176,22 +154,17 @@
         }
         .login-input {
             width: 100%; padding: 14px 16px; margin-bottom: 18px;
-            background: rgba(255,255,255,.07);
-            border: 1px solid rgba(255,255,255,.11);
+            background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.11);
             border-radius: 13px; color: #fff;
             font-family: 'DM Sans', sans-serif; font-size: .93rem; outline: none;
             transition: var(--ease);
         }
         .login-input::placeholder { color: rgba(255,255,255,.2); }
         .login-input:focus {
-            border-color: var(--accent);
-            background: rgba(200,169,110,.08);
+            border-color: var(--accent); background: rgba(200,169,110,.08);
             box-shadow: 0 0 0 3px rgba(200,169,110,.13);
         }
-        .login-error {
-            color: #fca5a5; font-size: .78rem;
-            margin-top: -10px; margin-bottom: 14px; display: none;
-        }
+        .login-error { color: #fca5a5; font-size: .78rem; margin-top: -10px; margin-bottom: 14px; display: none; }
         .login-back {
             display: block; text-align: center; margin-top: 22px;
             font-size: .75rem; color: rgba(255,255,255,.25);
@@ -204,28 +177,20 @@
         ══════════════════════════════════ */
         #dashboard { flex-direction: row; align-items: stretch; }
 
-        /* Sidebar */
         .sidebar {
             width: 252px; min-height: 100vh; flex-shrink: 0;
             background: var(--ink); display: flex; flex-direction: column;
             padding: 38px 0; position: sticky; top: 0; height: 100vh;
         }
-        .sb-logo {
-            font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem;
-            color: #fff; padding: 0 26px; margin-bottom: 44px; letter-spacing: -.5px;
-        }
+        .sb-logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.3rem; color: #fff; padding: 0 26px; margin-bottom: 44px; letter-spacing: -.5px; }
         .sb-logo span { color: var(--accent); }
-        .sb-section {
-            font-size: .62rem; letter-spacing: .18em; text-transform: uppercase;
-            color: rgba(255,255,255,.22); padding: 0 26px; margin-bottom: 8px;
-        }
+        .sb-section { font-size: .62rem; letter-spacing: .18em; text-transform: uppercase; color: rgba(255,255,255,.22); padding: 0 26px; margin-bottom: 8px; }
         .nav-btn {
             display: flex; align-items: center; gap: 12px;
-            padding: 12px 26px; margin: 2px 10px;
-            border-radius: 13px; cursor: pointer; font-size: .88rem;
-            color: rgba(255,255,255,.42); transition: var(--ease);
-            border: none; background: none; width: calc(100% - 20px); text-align: left;
-            font-family: 'DM Sans', sans-serif;
+            padding: 12px 26px; margin: 2px 10px; border-radius: 13px;
+            cursor: pointer; font-size: .88rem; color: rgba(255,255,255,.42);
+            transition: var(--ease); border: none; background: none;
+            width: calc(100% - 20px); text-align: left; font-family: 'DM Sans', sans-serif;
         }
         .nav-btn:hover { background: rgba(255,255,255,.06); color: rgba(255,255,255,.75); }
         .nav-btn.active { background: var(--accent); color: var(--ink); font-weight: 500; }
@@ -234,15 +199,13 @@
         .sb-bottom { margin-top: auto; padding: 0 10px; }
         .sb-user {
             display: flex; align-items: center; gap: 11px;
-            padding: 13px 16px; border-radius: 13px;
-            background: rgba(255,255,255,.05);
+            padding: 13px 16px; border-radius: 13px; background: rgba(255,255,255,.05);
         }
         .sb-avatar {
             width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
             background: linear-gradient(135deg, var(--accent), var(--purple));
             display: flex; align-items: center; justify-content: center;
-            font-family: 'Syne', sans-serif; font-weight: 800;
-            font-size: .75rem; color: #fff;
+            font-family: 'Syne', sans-serif; font-weight: 800; font-size: .75rem; color: #fff;
         }
         .sb-uname { font-size: .8rem; font-weight: 500; color: #fff; }
         .sb-urole { font-size: .68rem; color: rgba(255,255,255,.32); }
@@ -253,14 +216,18 @@
         }
         .logout-btn:hover { color: var(--red); }
 
-        /* Main */
         .main { flex: 1; padding: 46px 50px; overflow-y: auto; min-height: 100vh; }
         .main-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 34px; }
         .main-title { font-family: 'Syne', sans-serif; font-size: 2.1rem; font-weight: 800; letter-spacing: -1px; }
         .main-date { font-size: .76rem; color: var(--muted); margin-top: 4px; }
 
-        /* Stat cards */
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 36px; }
+        /* ── STAT CARDS — 5 columns ── */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 14px;
+            margin-bottom: 36px;
+        }
         .stat-card {
             background: var(--white); border-radius: var(--rad); padding: 22px 24px;
             box-shadow: var(--shadow); border: 1px solid rgba(0,0,0,.04);
@@ -286,10 +253,7 @@
         }
         .table-toolbar-left { display: flex; align-items: center; gap: 10px; }
         .table-title { font-family: 'Syne', sans-serif; font-size: .95rem; font-weight: 700; }
-        .row-pill {
-            background: var(--cream); color: var(--muted);
-            font-size: .7rem; padding: 3px 11px; border-radius: 100px;
-        }
+        .row-pill { background: var(--cream); color: var(--muted); font-size: .7rem; padding: 3px 11px; border-radius: 100px; }
         .search-wrap {
             display: flex; align-items: center; gap: 7px;
             background: var(--paper); border: 1px solid var(--cream);
@@ -302,7 +266,6 @@
         }
         .search-wrap input::placeholder { color: var(--muted); }
 
-        /* Data table */
         .data-table { width: 100%; border-collapse: collapse; }
         .data-table thead tr { border-bottom: 2px solid var(--cream); }
         .data-table th {
@@ -322,17 +285,18 @@
         .empty-icon { font-size: 2.2rem; margin-bottom: 10px; }
         .error-wrap { padding: 48px; text-align: center; }
         .error-pill { display: inline-flex; align-items: center; gap: 8px; background: #fee2e2; color: #991b1b; padding: 10px 20px; border-radius: 100px; font-size: .8rem; }
-
         .tbl-anim { animation: fadeUp .32s ease forwards; }
 
-        /* ── ANIMATIONS ── */
         @keyframes rise   { to { opacity: 1; transform: translateY(0) scale(1); } }
         @keyframes popIn  { to { opacity: 1; transform: scale(1); } }
         @keyframes spin   { to { transform: rotate(360deg); } }
         @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        @media (max-width: 1200px) {
+            .stats-grid { grid-template-columns: repeat(3, 1fr); }
+        }
         @media (max-width: 960px) {
-            .stats-grid { grid-template-columns: repeat(2,1fr); }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .sidebar { width: 220px; }
             .main { padding: 32px 22px; }
         }
@@ -358,11 +322,9 @@
         <p class="l-eyebrow">✦ Enterprise HR Platform &middot; Ahmedabad</p>
         <h1 class="l-headline">MyHR<span>Global.</span></h1>
         <p class="l-sub">A centralised people-operations platform — manage teams, track payroll, and run projects in one unified view.</p>
-
         <div class="l-actions">
             <button class="btn btn-dark" onclick="showPage('login')">Access Portal &rarr;</button>
         </div>
-
         <div class="l-stats">
             <div><span class="l-stat-num" id="ls-emp">—</span><span class="l-stat-label">Employees</span></div>
             <div><span class="l-stat-num" id="ls-dept">—</span><span class="l-stat-label">Departments</span></div>
@@ -384,17 +346,12 @@
     <div class="login-card">
         <div class="login-logo">MyHR <span>Global.</span></div>
         <p class="login-sub">Sign in to your admin portal</p>
-
         <label class="field-label" for="usr">Username</label>
         <input class="login-input" type="text" id="usr" placeholder="Enter username" autocomplete="username" />
-
         <label class="field-label" for="pwd">Password</label>
         <input class="login-input" type="password" id="pwd" placeholder="Enter password" autocomplete="current-password" />
-
         <p class="login-error" id="login-err">⚠ Invalid credentials — try again.</p>
-
         <button class="btn btn-dark" style="width:100%;justify-content:center;" onclick="doLogin()">Sign In</button>
-
         <a class="login-back" onclick="showPage('landing')">← Back to homepage</a>
     </div>
 </div>
@@ -409,10 +366,11 @@
         <div class="sb-logo">MyHR <span>Global.</span></div>
 
         <p class="sb-section">Data Tables</p>
-        <button class="nav-btn active" id="nav-employees"   onclick="load('employees',   this)"><span class="nav-icon">👤</span> Employees</button>
-        <button class="nav-btn"        id="nav-departments" onclick="load('departments', this)"><span class="nav-icon">🏢</span> Departments</button>
-        <button class="nav-btn"        id="nav-projects"    onclick="load('projects',    this)"><span class="nav-icon">🗂</span> Projects</button>
-        <button class="nav-btn"        id="nav-payroll"     onclick="load('payroll',     this)"><span class="nav-icon">💰</span> Payroll</button>
+        <button class="nav-btn active" id="nav-employees"         onclick="load('employees',         this)"><span class="nav-icon">👤</span> Employees</button>
+        <button class="nav-btn"        id="nav-departments"       onclick="load('departments',       this)"><span class="nav-icon">🏢</span> Departments</button>
+        <button class="nav-btn"        id="nav-projects"          onclick="load('projects',          this)"><span class="nav-icon">🗂</span> Projects</button>
+        <button class="nav-btn"        id="nav-payroll"           onclick="load('payroll',           this)"><span class="nav-icon">💰</span> Payroll</button>
+        <button class="nav-btn"        id="nav-employee_projects" onclick="load('employee_projects', this)"><span class="nav-icon">🔗</span> Project Assignments</button>
 
         <div class="sb-bottom">
             <div class="sb-user">
@@ -427,22 +385,44 @@
         <div class="main-header">
             <div>
                 <h1 class="main-title" id="pg-title">Employees</h1>
-                <p class="main-date"   id="pg-date"></p>
+                <p class="main-date" id="pg-date"></p>
             </div>
         </div>
 
+        <!-- 5 Stat Cards -->
         <div class="stats-grid">
-            <div class="stat-card"><div class="sc-icon" style="background:#fef3c7">👤</div><div class="sc-val" id="sc-emp">—</div><div class="sc-lbl">Total Employees</div></div>
-            <div class="stat-card"><div class="sc-icon" style="background:#dbeafe">🏢</div><div class="sc-val" id="sc-dept">—</div><div class="sc-lbl">Departments</div></div>
-            <div class="stat-card"><div class="sc-icon" style="background:#d1fae5">🗂</div><div class="sc-val" id="sc-proj">—</div><div class="sc-lbl">Projects</div></div>
-            <div class="stat-card"><div class="sc-icon" style="background:#ede9fe">💰</div><div class="sc-val" id="sc-pay">—</div><div class="sc-lbl">Total Payroll Paid</div></div>
+            <div class="stat-card">
+                <div class="sc-icon" style="background:#fef3c7">👤</div>
+                <div class="sc-val" id="sc-emp">—</div>
+                <div class="sc-lbl">Total Employees</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-icon" style="background:#dbeafe">🏢</div>
+                <div class="sc-val" id="sc-dept">—</div>
+                <div class="sc-lbl">Departments</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-icon" style="background:#d1fae5">🗂</div>
+                <div class="sc-val" id="sc-proj">—</div>
+                <div class="sc-lbl">Projects</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-icon" style="background:#ede9fe">💰</div>
+                <div class="sc-val" id="sc-pay">—</div>
+                <div class="sc-lbl">Total Payroll Paid</div>
+            </div>
+            <div class="stat-card">
+                <div class="sc-icon" style="background:#fce7f3">🔗</div>
+                <div class="sc-val" id="sc-asgn">—</div>
+                <div class="sc-lbl">Project Assignments</div>
+            </div>
         </div>
 
         <div class="table-wrap">
             <div class="table-toolbar">
                 <div class="table-toolbar-left">
                     <span class="table-title" id="tbl-label">Employees</span>
-                    <span class="row-pill"    id="row-count">0 rows</span>
+                    <span class="row-pill" id="row-count">0 rows</span>
                 </div>
                 <div class="search-wrap">
                     <span style="color:var(--muted);font-size:.9rem">🔍</span>
@@ -459,7 +439,7 @@
 
 
 <script>
-    /* ── ROUTING ───────────────────────────────────────────── */
+    /* ── ROUTING ── */
     function showPage(id) {
         document.querySelectorAll('.page').forEach(p => p.classList.remove('active','visible'));
         const el = document.getElementById(id);
@@ -467,7 +447,7 @@
         requestAnimationFrame(() => el.classList.add('visible'));
     }
 
-    /* ── LOGIN ─────────────────────────────────────────────── */
+    /* ── LOGIN ── */
     function doLogin() {
         const u = document.getElementById('usr').value.trim();
         const p = document.getElementById('pwd').value.trim();
@@ -486,7 +466,7 @@
         if (e.key === 'Enter' && document.getElementById('login').classList.contains('active')) doLogin();
     });
 
-    /* ── DASHBOARD INIT ────────────────────────────────────── */
+    /* ── DASHBOARD INIT ── */
     function initDashboard() {
         const now = new Date();
         document.getElementById('pg-date').textContent =
@@ -495,15 +475,16 @@
         fetch('http://localhost:3000/api/stats')
             .then(r => { if (!r.ok) throw new Error(); return r.json(); })
             .then(d => {
-                document.getElementById('sc-emp').textContent  = Number.isFinite(d.employees)   ? d.employees   : '—';
-                document.getElementById('sc-dept').textContent = Number.isFinite(d.departments) ? d.departments : '—';
-                document.getElementById('sc-proj').textContent = Number.isFinite(d.projects)    ? d.projects    : '—';
-                document.getElementById('sc-pay').textContent  = Number.isFinite(d.payroll)     ? '₹' + fmt(d.payroll) : '—';
+                document.getElementById('sc-emp').textContent  = Number.isFinite(Number(d.employees))   ? d.employees   : '—';
+                document.getElementById('sc-dept').textContent = Number.isFinite(Number(d.departments)) ? d.departments : '—';
+                document.getElementById('sc-proj').textContent = Number.isFinite(Number(d.projects))    ? d.projects    : '—';
+                document.getElementById('sc-pay').textContent  = Number.isFinite(d.payroll)             ? '₹' + fmt(d.payroll) : '—';
+                document.getElementById('sc-asgn').textContent = Number.isFinite(Number(d.assignments)) ? d.assignments : '—';
                 document.getElementById('ls-emp').textContent  = d.employees;
                 document.getElementById('ls-dept').textContent = d.departments;
                 document.getElementById('ls-proj').textContent = d.projects;
             }).catch(() => {
-            ['sc-emp','sc-dept','sc-proj','sc-pay'].forEach(id => document.getElementById(id).textContent = '—');
+            ['sc-emp','sc-dept','sc-proj','sc-pay','sc-asgn'].forEach(id => document.getElementById(id).textContent = '—');
         });
 
         load('employees', document.getElementById('nav-employees'));
@@ -515,14 +496,20 @@
         return Number(n).toLocaleString('en-IN');
     }
 
-    /* ── TABLE ─────────────────────────────────────────────── */
+    /* ── TABLE ── */
     let allRows = [];
 
     async function load(table, btn) {
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        const labels = { employees:'Employees', departments:'Departments', projects:'Projects', payroll:'Payroll' };
+        const labels = {
+            employees:         'Employees',
+            departments:       'Departments',
+            projects:          'Projects',
+            payroll:           'Payroll',
+            employee_projects: 'Project Assignments'
+        };
         document.getElementById('pg-title').textContent  = labels[table];
         document.getElementById('tbl-label').textContent = labels[table];
         document.getElementById('search-input').value = '';
@@ -567,7 +554,7 @@
         if (q) document.getElementById('row-count').textContent = filtered.length + ' / ' + allRows.length + ' rows';
     }
 
-    /* ── BOOT ──────────────────────────────────────────────── */
+    /* ── BOOT ── */
     showPage('landing');
     fetch('http://localhost:3000/api/stats')
         .then(r => r.json())
