@@ -8,22 +8,6 @@ This project implements a fully functional **Human Resource Management System (H
 
 ---
 
-## 📋 Table of Contents
-
-- [Overview](#overview)
-- [Technologies Used](#technologies-used)
-- [ER Diagram](#er-diagram)
-- [Table Descriptions](#table-descriptions)
-- [Relationships](#relationships)
-- [Design Decisions](#design-decisions)
-- [Data Integrity](#data-integrity)
-- [Sample Queries](#sample-queries)
-- [Frontend Dashboard](#frontend-dashboard)
-- [How to Run](#how-to-run)
-- [Authors](#authors)
-
----
-
 ## 🧭 Overview
 
 **MyHR Global** is a relational database-backed HR system that centralizes and manages four core domains of an organization:
