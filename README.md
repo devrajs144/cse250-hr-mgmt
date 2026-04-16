@@ -379,15 +379,21 @@ This is the main dashboard of the HR Management System.
 ## 📁 Project Structure
 
 ```
-HRmgmt/
-├── Backend/
-│   └── app.js              # Node.js backend server
-├── Frontend/
-│   ├── index.html          # Dashboard entry point
-│   ├── style.css           # Stylesheet
-│   └── app.js              # Frontend logic
-├── schema.sql              # Table definitions and constraints
-├── seed.sql                # Sample data for all tables
+.
+├── HRmgmt/
+│   ├── Backend/
+│   │   ├── app.js              # Main Node.js server
+│   │   ├── package.json        # Backend dependencies
+│   │   └── package-lock.json
+│   │
+│   ├── Frontend/
+│   │   └── index.html          # UI entry point
+│   │
+│   ├── Database/
+│   │   └── database_setup.sql  # Schema and initial setup
+│
+├── .idea/                      # IDE configuration files
+├── package.json                # Root configuration
 └── README.md
 ```
 
