@@ -35,14 +35,6 @@ CREATE TABLE payroll (
                          FOREIGN KEY (emp_id) REFERENCES employees(id)
 );
 
-CREATE TABLE employee_projects (
-                                   emp_id INT,
-                                   project_id INT,
-                                   PRIMARY KEY (emp_id, project_id),
-                                   FOREIGN KEY (emp_id) REFERENCES employees(id),
-                                   FOREIGN KEY (project_id) REFERENCES projects(project_id)
-);
-
 -- 3. Populate Data
 INSERT INTO departments (dept_name) VALUES ('IT'), ('HR'), ('Finance'), ('Engineering'), ('Marketing');
 
@@ -86,4 +78,3 @@ SELECT * FROM departments;
 SELECT * FROM employees;
 SELECT * FROM projects;
 SELECT * FROM payroll;
-# SELECT * FROM employee_projects;
