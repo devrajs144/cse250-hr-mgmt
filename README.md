@@ -60,7 +60,7 @@ erDiagram
     EMPLOYEE_PROJECTS {
         INT  employee_id PK "FK → employees"
         INT  project_id  PK "FK → projects"
-        VARCHAR full_name
+        DATE assigned_date
     }
 
     PAYROLL {
